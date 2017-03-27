@@ -34,6 +34,8 @@ import React                     from 'react';
 import { renderToString }        from 'react-dom/server';
 import { Provider }              from 'react-redux';
 import { RoutingContext, match } from 'react-router';
+import api_v1 from 'backend/api/v1';
+
 import routes                    from 'routes';
 import * as reducers             from 'reducers';
 import { createStore,
@@ -143,6 +145,9 @@ fs.open("config.json", "r", function(error, fd) {
 })
 
 function api_router(req, res) {
+
+  api_v1('/api/v1', req, res);
+
   if (req.url.indexOf('/api/slack/join') == 0) {
     var req = req.body
     join_slack(req, res, slack_key)
