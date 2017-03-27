@@ -1,15 +1,15 @@
 const notFound = require('./notFound');
 
 export const endpoints = [
-    { url: 'not_found', handler: notFound },
-    { url: 'blogs', handler: require('./blogs') },
-    { url: 'content', handler: require('./content') },
-    { url: 'contributors', handler: require('./contributors') },
-    { url: 'email', handler: require('./email') },
-    { url: 'invoices', handler: require('./invoices') },
-    { url: 'orders', handler: require('./orders') },
-    { url: 'products', handler: require('./products') },
-    { url: 'slack', handler: require('./slack') },
+    {url: 'not_found', method: 'get', handler: notFound},
+    {url: 'blogs', method: 'get', handler: require('./blogs')},
+    {url: 'content', method: 'get', handler: require('./content')},
+    {url: 'contributors', method: 'get', handler: require('./contributors')},
+    {url: 'email', method: 'get', handler: require('./email')},
+    {url: 'invoices', method: 'get', handler: require('./invoices')},
+    {url: 'orders', method: 'get', handler: require('./orders')},
+    {url: 'products', method: 'get', handler: require('./products')},
+    {url: 'slack', method: 'get', handler: require('./slack')},
 ];
 
 const urlMatch = (candidate, url) => {
@@ -31,5 +31,7 @@ export default function handler(baseUrl, req, res) {
     console.info('notfound handler');
     console.dir(matchedEndpoint);
 
-    matchedEndpoint.handler.default(req, res);
+    if (matchedEndpoint) {
+        matchedEndpoint.handler.default(req, res);
+    }
 };
