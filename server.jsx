@@ -352,6 +352,9 @@ function updateState(store, pathname) {
     }
 }
 
+const api = require('backend/api/v1');
+app.use('/api/v1', require('backend/api/v1/'));
+
 app.use((req, res) => {
     if (req.url === '/favicon.ico') {
         return res.redirect(301, 'https://s3.amazonaws.com/dataskeptic.com/favicon.ico')
