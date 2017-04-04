@@ -204,18 +204,6 @@ function api_router(req, res) {
         related_content(req, res)
         return true
     }
-    else if (req.url == '/api/blog/categories') {
-        var folders = my_cache.folders
-        return res.status(200).end(JSON.stringify(folders))
-    }
-    else if (req.url.indexOf('/api/blog/rss') === 0) {
-        get_blogs_rss(req, res, my_cache.blogmetadata_map);
-        return true
-    }
-    else if (req.url.indexOf('/api/blog') === 0) {
-        get_blogs(req, res, my_cache.blogmetadata_map, env);
-        return true
-    }
     else if (req.url.indexOf('/api/store/list') == 0) {
         var products = my_cache.products
         return res.status(200).end(JSON.stringify(products))
