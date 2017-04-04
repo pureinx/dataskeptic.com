@@ -94,8 +94,8 @@ let initialState = store.getState()
 delete initialState.checkout;
 
 
-global.env = env
-global.my_cache = my_cache
+global.env = env;
+global.my_cache = my_cache;
 
 const doRefresh = () => {
     process.nextTick(() => {
@@ -159,7 +159,7 @@ fs.open("config.json", "r", function (error, fd) {
         slack_key = c[env2]['slack']
         fs.close(fd)
     })
-})
+});
 
 function api_router(req, res) {
     if (req.url.indexOf('/api/slack/join') == 0) {
@@ -350,6 +350,8 @@ function updateState(store, pathname) {
         inject_podcast(store, my_cache, pathname)
     }
 }
+
+app.use('/api/v1/', require('api/v1'));
 
 app.use((req, res) => {
     if (req.url == '/favicon.ico') {
