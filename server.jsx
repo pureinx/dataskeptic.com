@@ -52,6 +52,8 @@ import redirects_map             from './redirects';
 
 import {reducer as formReducer} from 'redux-form'
 
+import Helmet from 'react-helmet';
+
 const app = express()
 
 var logDirectory = path.join(__dirname, 'log')
@@ -352,6 +354,7 @@ function updateState(store, pathname) {
 }
 
 app.use((req, res) => {
+
     if (req.url == '/favicon.ico') {
         return res.redirect(301, 'https://s3.amazonaws.com/dataskeptic.com/favicon.ico')
     }
@@ -411,11 +414,11 @@ app.use((req, res) => {
 
             const InitialView = (
                 <Provider store={store}>
-                    <RoutingContext {...renderProps} />
+                        <RoutingContext {...renderProps} />
                 </Provider>
             );
 
-            var title = "Data Skeptic"
+            var title = "Data stricted"
             var pathname = location.pathname.substring('/blog'.length, location.pathname.length)
             var alt_title = my_cache.title_map[pathname]
             if (alt_title != undefined) {
@@ -423,13 +426,31 @@ app.use((req, res) => {
             }
 
             const componentHTML = renderToString(InitialView)
+            const helmet = Helmet.renderStatic()
+
+            const template = `
+                <!doctype html>
+                <html ${helmet.htmlAttributes.toString()}>
+                    <head>
+                        <title>${helmet.title.toString()}</title>
+                        ${helmet.meta.toString()}
+                        ${helmet.link.toString()}
+                    </head>
+                    <body ${helmet.bodyAttributes.toString()}>
+                        <div id="content">
+                            ${componentHTML}
+                        </div>
+                    </body>
+                </html>
+            `;
 
             var injects = {
-                "react-view": componentHTML
+                "react-view": template
             }
 
             const state = store.getState()
             const HTML = getContentWrapper(title, state, injects)
+
             return HTML;
         }
 
