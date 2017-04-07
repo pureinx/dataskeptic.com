@@ -22,8 +22,6 @@ import {get_related_content} from '../../utils/redux_loader'
 import isEmpty from 'lodash/isEmpty';
 import { loadBlogPost, stopBlogLoading } from '../Actions/BlogsActions';
 
-import { Helmet } from 'react-helmet';
-
 class BlogArticle extends Component {
     constructor(props) {
         super(props)
@@ -97,40 +95,28 @@ class BlogArticle extends Component {
         }
 
         return (
-            <div>
-                <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>My Title</title>
-                    <link rel="canonical" href="http://mysite.com/example" />
-                </Helmet>
+            <div className="center">
+                { isEpisode ? <LatestEpisodePlayer guid={guid} /> : null }
 
-                <div className="center">
+                {contributor ? <BlogAuthorTop contributor={contributor}/> : null }
 
-                    { isEpisode ? <LatestEpisodePlayer guid={guid} /> : null }
-
-                    {contributor ? <BlogAuthorTop contributor={contributor}/> : null }
-
-
-
-                    <div id='blog-content'>
-                        <span dangerouslySetInnerHTML={{__html: content}}/>
-                    </div>
-
-                    <RelatedContent />
-
-                    { contributor ? <BlogAuthorBottom contributor={contributor} /> : null }
-
-                    <MailingListBlogFooter />
-
-                    <ReactDisqusComments
-                        shortname={disqusUsername}
-                        identifier={uid}
-                        title={title}
-                        url={uid}
-                        onNewComment={this.handleNewComment}/>
+                <div id='blog-content'>
+                    <span dangerouslySetInnerHTML={{__html: content}}/>
                 </div>
-            </div>
 
+                <RelatedContent />
+
+                { contributor ? <BlogAuthorBottom contributor={contributor} /> : null }
+
+                <MailingListBlogFooter />
+
+                <ReactDisqusComments
+                    shortname={disqusUsername}
+                    identifier={uid}
+                    title={title}
+                    url={uid}
+                    onNewComment={this.handleNewComment}/>
+            </div>
         )
     }
 }

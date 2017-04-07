@@ -8,7 +8,6 @@ import LatestEpisodePlayer from "../Containers/LatestEpisodePlayer"
 import MailingListBlogFooter from "./MailingListBlogFooter"
 import BlogLink from './BlogLink'
 
-
 class BlogItem extends React.Component {
 	constructor(props) {
 		super(props)
@@ -27,7 +26,7 @@ class BlogItem extends React.Component {
 
 	render() {
 		var oepisodes = this.props.episodes.toJS()
-			var oblogs = this.props.blogs.toJS()
+		var oblogs = this.props.blogs.toJS()
 		var osite = this.props.site.toJS()
 		var disqus_username = osite.disqus_username
 		var blog_focus = oblogs.blog_focus
