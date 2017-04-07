@@ -22,6 +22,8 @@ import Container from '../../Layout/Components/Container/Container';
 import Content from '../../Layout/Components/Content/Content';
 import SideBar from '../../Layout/Components/SideBar/SideBar';
 
+import Helmet from 'react-helmet';
+
 const DEFAULT_ACTIVE_FOLDER = 'All';
 import BLOGS_NAV_MAP from '../Constants/navMap';
 
@@ -171,35 +173,44 @@ class BlogContainer extends Component {
         const latestBlogId = oblogs.latestId;
 
         return (
-            <div className="blog-page">
-                <Container>
+            <div>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>My Title</title>
+                    <link rel="canonical" href="http://mysite.com/example" />
+                </Helmet>
 
-                    <Content title={contentTitle}>
-                        { blogs.length === 0
-                            ? <Loading />
-                            : <BlogList blogs={blogs} latestId={latestBlogId}/>
-                        }
-                    </Content>
-
-                    <SideBar title="Categories">
-                        <BlogNav folders={folders} pathname={pathname} activeFolder={activeFolder} onClick={this.onNavClick} />
-                    </SideBar>
-                </Container>
-                { activeFolder === DEFAULT_ACTIVE_FOLDER ?
+                <div className="blog-page">
                     <Container>
-                        <div className="row">
-                            <PaginationContainer
-                                currentPage={pageNum}
-                                total={total}
-                                perPage={perPage}
-                                onPageClick={this.onPaginatorPageClick}
-                            />
-                        </div>
-                    </Container>
 
-                : null }
+                        <Content title={contentTitle}>
+                            { blogs.length === 0
+                                ? <Loading />
+                                : <BlogList blogs={blogs} latestId={latestBlogId}/>
+                            }
+                        </Content>
+
+                        <SideBar title="Categories">
+                            <BlogNav folders={folders} pathname={pathname} activeFolder={activeFolder} onClick={this.onNavClick} />
+                        </SideBar>
+                    </Container>
+                    { activeFolder === DEFAULT_ACTIVE_FOLDER ?
+                        <Container>
+                            <div className="row">
+                                <PaginationContainer
+                                    currentPage={pageNum}
+                                    total={total}
+                                    perPage={perPage}
+                                    onPageClick={this.onPaginatorPageClick}
+                                />
+                            </div>
+                        </Container>
+
+                        : null }
+                </div>
+                )
+
             </div>
-        )
     }
 }
 

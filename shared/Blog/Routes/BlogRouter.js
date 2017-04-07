@@ -15,6 +15,8 @@ import Loading from "../../Common/Components/Loading"
 import transform_pathname from "../../utils/transform_pathname"
 import getBlog from "../../daos/getBlog"
 
+import Helmet from 'react-helmet'
+
 class BlogRouter extends React.Component {
 	constructor(props) {
 		super(props)
@@ -64,6 +66,19 @@ class BlogRouter extends React.Component {
 		*/
 
 		return (
+			<div>
+				<Helmet>
+					<meta charSet="utf-8" />
+					<title>My Title</title>
+					<link rel="canonical" href="http://mysite.com/example" />
+				</Helmet>
+
+				<div className="center">
+					<br />
+					<BlogArticle postUrl={pathname} />
+				</div>
+
+			</div>
 			<div className="center">
 				<br />
 				<BlogArticle postUrl={pathname} />

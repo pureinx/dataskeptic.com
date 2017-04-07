@@ -423,9 +423,27 @@ app.use((req, res) => {
             }
 
             const componentHTML = renderToString(InitialView)
+            const helmet = Helmet.renderStatic()
+
+            const template = `
+                <!doctype html>
+                <html ${helmet.htmlAttributes.toString()}>
+                    <head>
+                        <title>${helmet.title.toString()}</title>
+                        <meta name="description" content="Some description here" />
+                        ${helmet.meta.toString()}
+                        ${helmet.link.toString()}
+                    </head>
+                    <body ${helmet.bodyAttributes.toString()}>
+                        <div id="content">
+                            ${componentHTML}
+                        </div>
+                    </body>
+                </html>
+            `
 
             var injects = {
-                "react-view": componentHTML
+                "react-view": template
             }
 
             const state = store.getState()
